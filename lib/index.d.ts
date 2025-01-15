@@ -1,11 +1,11 @@
-import {DriveItem, ItemPreviewInfo, Permission, ThumbnailSet} from "@microsoft/microsoft-graph-types";
+import { DriveItem, ItemPreviewInfo, Permission, ThumbnailSet } from "@microsoft/microsoft-graph-types";
 
-declare namespace oneDriveAPI {
-  type DriveSpecification = {drive?: "me", driveId?: "" | "me"} | {drive: "user" | "drive" | "group" | "site", driveId: string};
-  type ItemSpecifiation = {itemId: string} | {itemPath: string};
-  type ParentSpecification = {parentId: string} | {parentPath: string} | {}
-  type AccessToken = {accessToken: string};
-  type ODataQueryParamaters = {queryParameters: string};
+declare namespace OneDriveAPI {
+  type DriveSpecification = { drive?: "me", driveId?: "" | "me" } | { drive: "user" | "drive" | "group" | "site", driveId: string };
+  type ItemSpecifiation = { itemId: string } | { itemPath: string };
+  type ParentSpecification = { parentId: string } | { parentPath: string } | {}
+  type AccessToken = { accessToken: string };
+  type ODataQueryParamaters = { queryParameters: string };
 
   type ListChildrenParams = AccessToken & DriveSpecification & (ItemSpecifiation | {}) & Partial<ODataQueryParamaters>;
   type ListChildrenFn = (params: ListChildrenParams) => Promise<{
@@ -50,15 +50,15 @@ declare namespace oneDriveAPI {
   type PartialDownloadParams = {
     bytesFrom?: number,
     bytesTo: number
-  } & AccessToken & DriveSpecification & (ItemSpecifiation | {graphDownloadURL: string});
+  } & AccessToken & DriveSpecification & (ItemSpecifiation | { graphDownloadURL: string });
   type PartialDownloadFn = (params: PartialDownloadParams) => Promise<NodeJS.ReadableStream>
 
   type SyncParams = {
     next?: string
   } & AccessToken & DriveSpecification
   type SyncFn = (params: SyncParams) => Promise<
-    {"@odata.nextLink": string, value: DriveItem[]} |
-    {"@odata.deltaLink": string, value: DriveItem[]}>;
+    { "@odata.nextLink": string, value: DriveItem[] } |
+    { "@odata.deltaLink": string, value: DriveItem[] }>;
 
 
   type HTTPMethods = "GET" | "HEAD" | "POST" | "PUT" | "DELETE" | "CONNECT" | "OPTIONS" | "TRACE"
@@ -116,4 +116,5 @@ declare namespace oneDriveAPI {
   };
 }
 
-export default oneDriveAPI;
+export = OneDriveAPI;
+export as namespace OneDriveAPI;
